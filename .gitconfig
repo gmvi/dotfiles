@@ -1,0 +1,8 @@
+[user]
+  name = George Matter
+[user]
+  email = George.Matter.VI@gmail.com
+[push]
+  default = current
+[core]
+  excludesfile = ~/.gitignore
