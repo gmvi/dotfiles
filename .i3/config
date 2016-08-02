@@ -177,3 +177,6 @@ bar {
 for_window [class="google-chrome"] layout tabbed, border none
 for_window [class="firefox"] layout tabbed, border none
 for_window [title="FTL"] layout tabbed, floating disable
+
+exec i3-msg 'workspace 2:i; exec firefox;'
+#TODO: real workspace persistance setup
