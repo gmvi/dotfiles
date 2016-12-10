@@ -1,8 +1,5 @@
-""" Header """
-
-" required for vundle?
-set nocompatible
-filetype off
+set nocompatible " be vim, not vi
+filetype off " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -13,44 +10,61 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-""""""""""""""""""""""
+" autocomplete
+"Plugin 'Valloric/YouCompleteMe'
 
-""" Vundle Plugins """
-
-" git wrapper " TODO: learn
-Plugin 'tpope/vim-fugitive'
-
-" commenting " TODO: learn
-Plugin 'tpope/vim-commentary'
-
-" surrond " TODO: learn
-Plugin 'tpope/vim-surround'
-
-" syntax
-Plugin 'scrooloose/syntastic'
-
-" autocomplete too slow " TODO: investigate
-" Plugin 'Valloric/YouCompleteMe'
-
-" autoinsert delimiter " TODO: does it work? is it on?
-Plugin 'Raimondi/delimitMate'
-
-" golang!
 Plugin 'fatih/vim-go'
 
-""""""""""""""
-" Required by Vundle. All plugins must be defined above.
-call vundle#end()          " required
-filetype plugin indent on  " enables filetype plugins
+Plugin 'tpope/vim-fugitive'
 
-""""""""""""""
+Plugin 'tpope/vim-commentary'
 
-""" Basics """
+Plugin 'tpope/vim-surround'
 
-" many features are disabled by default for resource-deprived setups
+Plugin 'scrooloose/syntastic'
+
+Plugin 'Raimondi/delimitMate'
+
+Plugin 'mxw/vim-jsx'
+
+Plugin 'christoomey/vim-tmux-navigator'
+
+Plugin 'wesQ3/vim-windowswap'
+
+call vundle#end()
+" Some Linux distributions set filetype in /etc/vimrc.
+" Clear filetype flags before changing runtimepath to force Vim to reload them.
+if exists("g:did_load_filetypes")
+        filetype off
+        filetype plugin indent on
+endif
+filetype plugin indent on
+syntax on
+
+colorscheme monokai
+
+" split L-to-R and U-to-D
+set splitbelow
+set splitright
+
+" numbering
+set number
+set relativenumber
+
+" case insensitive searching
+set ignorecase
+set smartcase
+
+" path completion
+set wildmode=longest,list
+set wildmenu
+set wildignore=*.o,*.~,*.pyc
+
+" searching
+set hlsearch
+" highlight clearing macro set to <Leader><CR>
+
 set backspace=eol,start,indent " sane backspace behavior
-set number " show line numbers
-syntax enable " syntax highlighting
 set hidden " allow hidden buffers
 set history=100 " remember last 100 command
 
@@ -58,44 +72,89 @@ set history=100 " remember last 100 command
 set exrc
 set secure
 
+" integrate vim and tmux cliboard?
+set clipboard=unnamed
+
 """"""""""""""
 
 """ Leader """
 
 let mapleader = "\<Space>"
-" control type functionality
-" open a new file
-nnoremap <Leader>n :CtrlP<CR>
-nnoremap <Leader>w :w<CR>
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
 
-"""""""""""""""""""""""""""""""
+nmap <Leader>` :set invlist<CR>
+
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>Q :qall<CR>
+nnoremap <Leader>w :w<CR>
+"nnoremap <Leader>e :tabe .<CR>
+vnoremap <Leader>y "+y
+" recursive mapping because Y is nmapped below
+vmap <Leader>Y "+Y
+nnoremap <Leader>p "+p
+nnoremap <Leader>P "+P
+vnoremap <Leader>p "+p
+vnoremap <Leader>P "+P
+
+vnoremap <Leader>d "+d
+"nnoremap <Leader>h :tabN<CR>
+"nnoremap <Leader>H :tabm -1<CR>
+"nnoremap <Leader>l :tabn<CR>
+"nnoremap <Leader>L :tabm +1<CR>
+nnoremap <Leader><CR> :let @/ = ""<CR>
+
+
+""""""""""""
+
+""" NVIM """
+
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+  "tnoremap <C-n> <C-\><C-n>:tabe<CR>:term<CR>
+endif
+
+""""""""""""""""""""""""""""""
 
 """ Basic Mapping Smoothing """
 
 " Y is a synonym for yy by default. Map it to y$ to conform to C and D.
-map Y y$
+noremap Y y$
 " make U opposite of u
-map U <c-r>
+noremap U <C-r>
+" K as the opposite of J (not mapped in visual mode)
+nnoremap K i<CR><Esc>k$
 
 """"""""""""""""
 
 """ Movement """
 
-" horizontally-centered page-up/down
-map gk HzbM
-map gj LztM
+" horizontally-centered half-page-up/down
+nnoremap gk Hkzz
+nnoremap gj Ljzz
 " make '' horizontally centered
-map '' ''zz
+noremap '' ''zz
 
 " fixes scrooloose/syntastic not working with fatih/vim-go
 let g:syntastic_always_populate_loc_list = 1
 
+"""""""""""""""""""""""
+
+""" Pane Navigation """
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <c-/> :TmuxNavigatePrevious<cr>
+"""""""""""""""""""""""
+
+""" Pane Management """
+let g:windowswap_map_keys = 0 "prevent default bindings
+nnoremap <silent> <c-w>y :call WindowSwap#MarkWindowSwap()<CR>
+nnoremap <silent> <c-w>p :call WindowSwap#DoWindowSwap()<CR>
+nnoremap <silent> <c-w><cr> <c-w>=<c-w><bar>40<c-w><lt>
+nmap <silent> <c-w><space> <c-w>y<c-w>h<c-w>p<c-w><cr>
+nmap <silent> <c-w><c-space> <c-w><space>
+nmap <silent> <c-w>e <c-w>l<c-w>n<c-w><space>
 """""""""""""""""""""""
 
 """ File Management """
@@ -106,12 +165,6 @@ let g:netrw_list_hide = '^\./$' " comma-seperated regexes
 let g:netrw_hide = 1
 " tree view?
 let g:netrw_liststyle=3
-
-" tab movement
-nnoremap <Leader>h :tabN<CR>
-nnoremap <Leader>l :tabn<CR>
-nnoremap <Leader>H :tabm -1<CR>
-nnoremap <Leader>L :tabm +1<CR>
 
 " tabbar settings
 hi TabLineFill ctermfg=0
@@ -134,47 +187,67 @@ endfunction
 
 """ Unreviewed """
 
-set re=1
+"set re=1
 
-set wildmenu
-set wildignore=*.o,*.~,*.pyc
-
-set ignorecase
-set smartcase
 set autoindent
 set nostartofline
 set ruler
 
 set cmdheight=2
-set encoding=utf8
-"set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-
-colorscheme monokai
+if !has('nvim')
+  set encoding=utf8
+endif
+set expandtab
 
 set backupcopy=yes
 
-""""""""""""""""""""""
+set list
+set listchars=eol:¬,tab:!·,trail:∙,nbsp:∘
+set invlist
+
+""""""""""""""""""
 
 """ Ideosyncracies """
 
-imap kj <Esc>
-nmap 'm 'mzz
+inoremap kj <Esc>
+nnoremap t kt
+nnoremap T jT
 
-"""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""
 
-""" alt-bracket indentation hacks """
+""" extensions """
 
-nmap Û <<hh
-nmap <m-[> <<hh
-nmap <m-]> >>ll
-imap Û <Esc><<hha
-imap <m-[> <Esc><<hha
-imap <m-]> <Esc>>>lla
-vmap Û <
-vmap <m-[> <
-vmap <m-]> >
+nnoremap ci/ T/ct/
+nnoremap ca/ F/cf/
+nnoremap ci, T,ct,
+nnoremap ca, F,cf,
 
-"""""""""""""""""""""""""""""""""""""
+""""""""""""""""""
+
+""" experiments """
+" squish w/e/b into w/e as back/end
+nnoremap w b
+nnoremap W B
+nnoremap b <Nop>
+nnoremap B <Nop>
+" move d to s, freeing d
+nnoremap s d
+nnoremap ss dd
+nnoremap sd <Nop>
+vnoremap s d
+nnoremap S D
+vnoremap S D
+" move t to d and alter semantics to match w/e
+" now, d/f : go back/forward to char; D/F : go back/forward until char
+nnoremap d F
+vnoremap d F
+nnoremap D T
+vnoremap D T
+nnoremap F t
+vnoremap F t
+nnoremap t <Nop>
+vnoremap t <Nop>
+nnoremap T <Nop>
+vnoremap T <Nop>
+
+"""""""""""""""""""

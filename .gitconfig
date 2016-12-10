@@ -1,8 +1,10 @@
 [user]
-  name = George Matter
-[user]
-  email = George.Matter.VI@gmail.com
-[push]
-  default = current
+	name = George Matter
+	email = george.matter@socrata.com
 [core]
-  excludesfile = ~/.gitignore
+	editor = vim
+	filemode = false
+[push]
+        default = current
+[alias]
+        conflicts = "!eval $(git config --get core.editor) $(git rev-parse --show-toplevel)/{$(git diff --name-only | uniq | tr '\n' ',' | sed 's/,$//')}"
