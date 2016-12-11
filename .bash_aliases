@@ -13,10 +13,6 @@ function cdls () {
 }
 alias c='cdls'
 
-alias clipboard='xclip -selection clipboard'
-alias copy='clipboard -i'
-alias paste='clipboard -o'
-
 alias treee='tree -C | less -XFR'
 
 exit() {
@@ -26,3 +22,8 @@ exit() {
     tmux detach
   fi
 }
+
+alias git=hub
+alias vim=nvim
+if hash gls 2>/dev/null; then alias ls=gls; fi
+function faketty { script -qfc "$(printf "%q " "$@")"; }
