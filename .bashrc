@@ -57,9 +57,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='\r\r${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='\r\r${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -88,9 +88,9 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='ls -lAFh'
-alias la='ls -AF'
-alias l='ls -CF'
+alias ll='ls -lAFh --group'
+alias la='ls -AF --group'
+alias l='ls -Ft --group'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -116,4 +116,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
+eval $(thefuck --alias)
 
+# to make npm global installs really be local
+NPM_PACKAGES="${HOME}/.npm-packages"
+
+PATH="$PATH:$NPM_PACKAGES/bin"

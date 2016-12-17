@@ -18,3 +18,11 @@ alias copy='clipboard -i'
 alias paste='clipboard -o'
 
 alias treee='tree -C | less -XFR'
+
+exit() {
+  if [[ -z $TMUX ]]; then
+    builtin exit
+  else
+    tmux detach
+  fi
+}
