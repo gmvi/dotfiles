@@ -126,21 +126,22 @@ let g:syntastic_always_populate_loc_list = 1
 
 """ Pane Navigation """
 let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <c-/> :TmuxNavigatePrevious<cr>
+nnoremap <silent> <C-H> :TmuxNavigateLeft<CR>
+nnoremap <silent> <C-J> :TmuxNavigateDown<CR>
+nnoremap <silent> <C-K> :TmuxNavigateUp<CR>
+nnoremap <silent> <C-L> :TmuxNavigateRight<CR>
+nnoremap <silent> <C-/> :TmuxNavigatePrevious<CR>
 """""""""""""""""""""""
 
 """ Pane Management """
 let g:windowswap_map_keys = 0 "prevent default bindings
-nnoremap <silent> <c-w>y :call WindowSwap#MarkWindowSwap()<CR>
-nnoremap <silent> <c-w>p :call WindowSwap#DoWindowSwap()<CR>
-nnoremap <silent> <c-w><cr> <c-w>=<c-w><bar>40<c-w><lt>
-nmap <silent> <c-w><space> <c-w>y<c-w>h<c-w>p<c-w><cr>
-nmap <silent> <c-w><c-space> <c-w><space>
-nmap <silent> <c-w>e <c-w>l<c-w>n<c-w><space>
+nnoremap <silent> <C-W>y :call WindowSwap#MarkWindowSwap()<CR>
+nnoremap <silent> <C-W>p :call WindowSwap#DoWindowSwap()<CR>
+nnoremap <silent> <C-W>v :vnew<CR>
+nnoremap <silent> <C-W><CR> <C-W>=<C-W><BAR>40<C-W><LT>
+nmap <silent> <C-W><SPACE> <C-W>y<C-W>h<C-W>p<C-W><CR>
+nmap <silent> <C-W><C-SPACE> <C-W><SPACE>
+nmap <silent> <C-W>e <C-W>l<C-W>n<C-W><SPACE>
 """""""""""""""""""""""
 
 """ File Management """
