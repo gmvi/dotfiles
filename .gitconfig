@@ -1,8 +1,10 @@
 [user]
   name = George Matter
-[user]
   email = george.matter.vi@gmail.com
 [push]
   default = current
 [core]
-  excludesfile = ~/.gitignore
+  editor = vim
+  filemode = false
+[alias]
+  conflicts = "!eval $(git config --get core.editor) $(git rev-parse --show-toplevel)/{$(git diff --name-only | uniq | tr '\n' ',' | sed 's/,$//')}"

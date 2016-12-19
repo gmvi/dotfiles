@@ -1,21 +1,50 @@
-alias lh='ls -dF `ls -A1|grep "^\."|tr "\n" " "`'
-alias llh='ls -dlF `ls -A1|grep "^\."|tr "\n" " "`'
-alias lllh='(echo llh `pwd` "| less"; ls --color=always -dlF `ls -A1|grep "^\."|tr "\n" " "`)|less -R'
-alias lll='(echo ll `pwd` "| less"; ll --color=always)|less -R'
+function upgrade_if_exists () {
+    if hash $2 2>/dev/null; then
+        if alias=$(alias $1 2>/dev/null); then
+            # extract right hand side of existing alias, then replace $1 with $2
+            rhs=$(echo $alias | sed -r "s/^.*?'(.*)'$/\1/" | sed -r "s/^$1\b/$2/")
+            alias $1="$rhs"
+        else
+            alias $1="$2"
+        fi
+    fi
+}
+upgrade_if_exists git hub
+upgrade_if_exists vim nvim
+upgrade_if_exists ls gls
+
+if ls --version 2>/dev/null | grep GNU >/dev/null; then
+    # ls is gls
+    alias ll='ls -lAFh --group'
+    alias la='ls -AF --group'
+    alias l='ls -Ft --group'
+else
+    alias ll='ls -lAFh'
+    alias la='ls -AF'
+    alias l='ls -Ft'
+fi
 
 function cdls () {
-  if [ $# -eq 0 ]
-    then
-      l
+    if [ $# -eq 0 ]; then
+        l
     else
-      cd "$@" && l
-  fi
+        cd "$@" && l
+    fi
 }
-alias c='cdls'
+alias c=cdls
 
-alias clipboard='xclip -selection clipboard'
-alias copy='clipboard -i'
-alias paste='clipboard -o'
+function cd_up() {
+    cd $( pwd | sed -r "s|(.*/$1[^/]*/).*|\1|" )
+    pwd | sed "s|^$HOME\([^$]\)|~\1|"
+    l
+}
+alias c.=cd_up
+
+if hash xclip 2>/dev/null; then
+    alias clipboard='xclip -selection clipboard'
+    alias copy='clipboard -i'
+    alias paste='clipboard -o'
+fi
 
 alias treee='tree -C | less -XFR'
 
@@ -26,3 +55,4 @@ exit() {
     tmux detach
   fi
 }
+function faketty { script -qfc "$(printf "%q " "$@")"; }
