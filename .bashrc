@@ -13,6 +13,8 @@ if [ "$color_prompt" ]; then
     no_c="\033[00m"
 fi
 
+unset color_prompt
+
 function git_root () {
     git rev-parse --show-toplevel 2>/dev/null
 }
