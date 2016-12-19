@@ -50,7 +50,7 @@ function show_rel_dir () {
 PS1='\r\r['
 PS1=$PS1'\['$usr_c'\]$(show_location)\['$no_c'\]'
 PS1=$PS1'\['$git_c'\]$(show_branch)\['$no_c'\] '
-PS1=$PS1'\['$dir_c'\]$(show_rel_dir)\['$no_c'\]$ '
+PS1=$PS1'\['$dir_c'\]$(show_rel_dir)\['$no_c'\]]$ '
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
