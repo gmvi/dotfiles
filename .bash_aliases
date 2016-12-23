@@ -24,12 +24,19 @@ else
     alias l='ls -Ft'
 fi
 
+alias t='tree -L 2'
+
 function cdls () {
-    if [ $# -eq 0 ]; then
-        l
-    else
-        cd "$@" && l
+    if [ ! $# -eq 0 ]; then
+        cd "$@"
     fi
+    l
+}
+function cdtree () {
+    if [ ! $# -eq 0 ]; then
+        cd "$@"
+    fi
+    t
 }
 alias c=cdls
 

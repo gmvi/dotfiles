@@ -21,6 +21,8 @@ Plugin 'tpope/vim-commentary'
 
 Plugin 'tpope/vim-surround'
 
+Plugin 'tpope/vim-obsession'
+
 Plugin 'scrooloose/syntastic'
 
 Plugin 'Raimondi/delimitMate'
@@ -107,7 +109,7 @@ noremap Y y$
 " make U opposite of u
 noremap U <C-r>
 " K as the opposite of J (not mapped in visual mode)
-nnoremap K i<CR><Esc>k$
+nnoremap K i<CR><Esc>k:s/\s\+$//e<CR>$
 
 """"""""""""""""
 
@@ -139,7 +141,7 @@ nnoremap <silent> <C-W>y :call WindowSwap#MarkWindowSwap()<CR>
 nnoremap <silent> <C-W>p :call WindowSwap#DoWindowSwap()<CR>
 nnoremap <silent> <C-W>v :vnew<CR>
 nnoremap <silent> <C-W><CR> <C-W>=<C-W><BAR>40<C-W><LT>
-nmap <silent> <C-W><SPACE> <C-W>y<C-W>h<C-W>p<C-W><CR>
+nmap <silent> <C-W><SPACE> <C-W>y<C-W>h<C-W>p<C-W>H<C-W><CR>
 nmap <silent> <C-W><C-SPACE> <C-W><SPACE>
 nmap <silent> <C-W>e <C-W>l<C-W>n<C-W><SPACE>
 """""""""""""""""""""""

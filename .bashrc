@@ -7,6 +7,8 @@ fi
 # It's a prompt!
 
 if [ "$color_prompt" ]; then
+    alias ls='ls --color=auto'
+
     usr_c="\033[1;32m"
     dir_c="\033[1;34m"
     git_c="\033[1;30m"
@@ -58,15 +60,7 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-export NVM_DIR="/Users/george.matter/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 eval $(thefuck --alias)
 
-# to make npm global installs really be local
-NPM_PACKAGES="${HOME}/.npm-packages"
-
-export PATH="$PATH:$NPM_PACKAGES/bin"
-
-export GOPATH="$HOME/go"
-export PATH=$PATH:$GOPATH/bin
