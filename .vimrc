@@ -128,11 +128,11 @@ let g:syntastic_always_populate_loc_list = 1
 
 """ Pane Navigation """
 let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <C-H> :TmuxNavigateLeft<CR>
-nnoremap <silent> <C-J> :TmuxNavigateDown<CR>
-nnoremap <silent> <C-K> :TmuxNavigateUp<CR>
-nnoremap <silent> <C-L> :TmuxNavigateRight<CR>
-nnoremap <silent> <C-/> :TmuxNavigatePrevious<CR>
+nnoremap <silent> <C-W>h :TmuxNavigateLeft<CR>
+nnoremap <silent> <C-W>j :TmuxNavigateDown<CR>
+nnoremap <silent> <C-W>k :TmuxNavigateUp<CR>
+nnoremap <silent> <C-W>l :TmuxNavigateRight<CR>
+nnoremap <silent> <C-W>/ :TmuxNavigatePrevious<CR>
 """""""""""""""""""""""
 
 """ Pane Management """
