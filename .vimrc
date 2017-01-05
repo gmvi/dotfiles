@@ -115,9 +115,9 @@ nnoremap K i<CR><Esc>k:s/\s\+$//e<CR>$
 
 """ Movement """
 
-" horizontally-centered half-page-up/down
-nnoremap gk Hkzz
-nnoremap gj Ljzz
+" move top or bottom line to center
+nnoremap gk Hzz
+nnoremap gj Lzz
 " make '' horizontally centered
 noremap '' ''zz
 
@@ -132,7 +132,7 @@ nnoremap <silent> <C-W>h :TmuxNavigateLeft<CR>
 nnoremap <silent> <C-W>j :TmuxNavigateDown<CR>
 nnoremap <silent> <C-W>k :TmuxNavigateUp<CR>
 nnoremap <silent> <C-W>l :TmuxNavigateRight<CR>
-nnoremap <silent> <C-W>/ :TmuxNavigatePrevious<CR>
+nnoremap <silent> <C-W>o :TmuxNavigatePrevious<CR>
 """""""""""""""""""""""
 
 """ Pane Management """
@@ -212,11 +212,6 @@ nnoremap ca, F,cf,
 """"""""""""""""""
 
 """ experiments """
-" squish w/e/b into w/e as back/end
-noremap w b
-noremap W B
-noremap b <Nop>
-noremap B <Nop>
 " disable s
 noremap s <Nop>
 noremap S <Nop>
