@@ -80,13 +80,10 @@ nmap <Leader>` :set invlist<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>Q :qall<CR>
 nnoremap <Leader>w :w<CR>
-vnoremap <Leader>y "+y
-" recursive mapping because Y is nmapped below
-vmap <Leader>Y "+Y
-nnoremap <Leader>p "+p
-nnoremap <Leader>P "+P
-vnoremap <Leader>p "+p
-vnoremap <Leader>P "+P
+map <Leader>y "+y
+map <Leader>Y "+Y
+map <Leader>p "+p
+map <Leader>P "+P
 
 vnoremap <Leader>d "+d
 nnoremap <Leader><CR> :let @/ = ""<CR>
@@ -128,11 +125,11 @@ let g:syntastic_always_populate_loc_list = 1
 
 """ Pane Navigation """
 let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <C-W>h :TmuxNavigateLeft<CR>
-nnoremap <silent> <C-W>j :TmuxNavigateDown<CR>
-nnoremap <silent> <C-W>k :TmuxNavigateUp<CR>
-nnoremap <silent> <C-W>l :TmuxNavigateRight<CR>
-nnoremap <silent> <C-W>o :TmuxNavigatePrevious<CR>
+nnoremap <silent> <C-W><C-H> :TmuxNavigateLeft<CR>
+nnoremap <silent> <C-W><C-J> :TmuxNavigateDown<CR>
+nnoremap <silent> <C-W><C-K> :TmuxNavigateUp<CR>
+nnoremap <silent> <C-W><C-L> :TmuxNavigateRight<CR>
+nnoremap <silent> <C-W><C-O> :TmuxNavigatePrevious<CR>
 """""""""""""""""""""""
 
 """ Pane Management """
@@ -140,10 +137,11 @@ let g:windowswap_map_keys = 0 "prevent default bindings
 nnoremap <silent> <C-W>y :call WindowSwap#MarkWindowSwap()<CR>
 nnoremap <silent> <C-W>p :call WindowSwap#DoWindowSwap()<CR>
 nnoremap <silent> <C-W>v :vnew<CR>
-nnoremap <silent> <C-W><CR> <C-W>=<C-W><BAR>40<C-W><LT>
+nnoremap <silent> <C-W><CR> <C-W>=<C-W><BAR>80<C-W><LT>
 nmap <silent> <C-W><SPACE> <C-W>y<C-W>h<C-W>p<C-W>H<C-W><CR>
 nmap <silent> <C-W><C-SPACE> <C-W><SPACE>
 nmap <silent> <C-W>e <C-W>l<C-W>n<C-W><SPACE>
+nmap <C-W><C-E> <C-W>e
 """""""""""""""""""""""
 
 """ File Management """
@@ -209,11 +207,31 @@ nnoremap ca/ F/cf/
 nnoremap ci, T,ct,
 nnoremap ca, F,cf,
 
+noremap f f
+noremap F t
+noremap s F
+noremap S T
+noremap t <Nop>
+noremap T <Nop>
+
 """"""""""""""""""
 
 """ experiments """
-" disable s
-noremap s <Nop>
-noremap S <Nop>
+
+" emacs-like bindings for line editing
+imap <C-A> <Home>
+imap <C-E> <End>
+imap <C-B> <Left>
+imap <C-F> <Right>
+imap <C-P> <Up>
+imap <C-N> <Down>
+imap <C-S-B> <C-O>B
+imap <C-S-F> <C-O>E
+imap <C-D> <C-O>dl
+nmap <C-D> dl
+imap <C-H> <C-O>dh
+nmap <C-H> dh
+imap <C-S-D> <C-B><C-O>D
+imap <C-S-H> <C-O>d0<C-H>
 
 """""""""""""""""""

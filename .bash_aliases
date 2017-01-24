@@ -12,6 +12,7 @@ function upgrade_if_exists () {
 upgrade_if_exists git hub
 upgrade_if_exists vim nvim
 upgrade_if_exists ls gls
+upgrade_if_exists shuf gshuf
 
 if ls --version 2>/dev/null | grep GNU >/dev/null; then
     # ls is gls
@@ -63,3 +64,5 @@ exit() {
   fi
 }
 function faketty { script -qfc "$(printf "%q " "$@")"; }
+#alias randman="until for binpath in ${PATH//:/$' '}; do ls ${binpath}; done | shuf | head -1 | xargs man; do :; done"
+alias randman="until for binpath in ${PATH//:/$' '}; do ls ${binpath}; done | cat; do :; done"
