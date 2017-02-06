@@ -56,7 +56,30 @@ fi
 
 alias treee='tree -C | less -XFR'
 
-exit() {
+function randint() {
+    if [ $# -eq 0 ]; then
+        MIN=0
+        MAX=65535
+    elif [ $# -eq 1 ]; then
+        MIN=0
+        MAX=$1
+    else
+        MIN=$1
+        MAX=$2
+    fi
+    if hash jot 2>/dev/null; then
+        jot -r 1 $MIN $MAX
+    fi
+}
+
+function pssh() {
+    PORT=$(jot -r 1 1025 65536)
+    if ssh -D $PORT -fqN "$@"; then
+        echo proxy listening on localhost:$PORT
+    fi
+}
+
+function exit() {
   if [[ -z $TMUX ]]; then
     builtin exit
   else
@@ -65,4 +88,3 @@ exit() {
 }
 function faketty { script -qfc "$(printf "%q " "$@")"; }
 #alias randman="until for binpath in ${PATH//:/$' '}; do ls ${binpath}; done | shuf | head -1 | xargs man; do :; done"
-alias randman="until for binpath in ${PATH//:/$' '}; do ls ${binpath}; done | cat; do :; done"
