@@ -125,23 +125,23 @@ let g:syntastic_always_populate_loc_list = 1
 
 """ Pane Navigation """
 let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <C-W><C-H> :TmuxNavigateLeft<CR>
-nnoremap <silent> <C-W><C-J> :TmuxNavigateDown<CR>
-nnoremap <silent> <C-W><C-K> :TmuxNavigateUp<CR>
-nnoremap <silent> <C-W><C-L> :TmuxNavigateRight<CR>
-nnoremap <silent> <C-W><C-O> :TmuxNavigatePrevious<CR>
+nnoremap <silent> <C-w><C-h> :TmuxNavigateLeft<CR>
+nnoremap <silent> <C-w><C-j> :TmuxNavigateDown<CR>
+nnoremap <silent> <C-w><C-k> :TmuxNavigateUp<CR>
+nnoremap <silent> <C-w><C-l> :TmuxNavigateRight<CR>
+nnoremap <silent> <C-w><C-o> :TmuxNavigatePrevious<CR>
 """""""""""""""""""""""
 
 """ Pane Management """
 let g:windowswap_map_keys = 0 "prevent default bindings
-nnoremap <silent> <C-W>y :call WindowSwap#MarkWindowSwap()<CR>
-nnoremap <silent> <C-W>p :call WindowSwap#DoWindowSwap()<CR>
-nnoremap <silent> <C-W>v :vnew<CR>
-nnoremap <silent> <C-W><CR> <C-W>=<C-W><BAR>80<C-W><LT>
-nmap <silent> <C-W><SPACE> <C-W>y<C-W>h<C-W>p<C-W>H<C-W><CR>
-nmap <silent> <C-W><C-SPACE> <C-W><SPACE>
-nmap <silent> <C-W>e <C-W>l<C-W>n<C-W><SPACE>
-nmap <C-W><C-E> <C-W>e
+nnoremap <silent> <C-w>y :call WindowSwap#MarkWindowSwap()<CR>
+nnoremap <silent> <C-w>p :call WindowSwap#DoWindowSwap()<CR>
+nnoremap <silent> <C-w>v :vnew<CR>
+nnoremap <silent> <C-w><CR> <C-w>=<C-w><BAR>80<C-w><LT>
+nmap <silent> <C-w><SPACE> <C-w>y<C-w>h<C-w>p<C-w>H<C-w><CR>
+nmap <silent> <C-w><C-SPACE> <C-w><SPACE>
+nmap <silent> <C-w>e <C-w>l<C-w>n<C-w><SPACE>
+nmap <C-w><C-e> <C-w>e
 """""""""""""""""""""""
 
 """ File Management """
@@ -219,19 +219,19 @@ noremap T <Nop>
 """ experiments """
 
 " emacs-like bindings for line editing
-imap <C-A> <Home>
-imap <C-E> <End>
-imap <C-B> <Left>
-imap <C-F> <Right>
-imap <C-P> <Up>
-imap <C-N> <Down>
-imap <C-S-B> <C-O>B
-imap <C-S-F> <C-O>E
-imap <C-D> <C-O>dl
-nmap <C-D> dl
-imap <C-H> <C-O>dh
-nmap <C-H> dh
-imap <C-S-D> <C-B><C-O>D
-imap <C-S-H> <C-O>d0<C-H>
+imap <C-a> <Home>
+imap <C-e> <End>
+imap <C-b> <Left>
+imap <C-f> <Right>
+imap <C-p> <Up>
+imap <C-n> <Down>
+imap <C-S-b> <C-o>B
+imap <C-S-f> <C-o>E
+imap <C-d> <C-o>dl
+nmap <C-d> dl
+imap <C-h> <C-o>dh
+nmap <C-h> dh
+imap <C-S-d> <C-b><C-o>D
+imap <C-S-h> <C-o>d0<C-h>
 
 """""""""""""""""""
