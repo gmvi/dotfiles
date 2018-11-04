@@ -1,44 +1,11 @@
 set nocompatible " be vim, not vi
+set nowrap " to be re-enabled later
 filetype off " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-" autocomplete
-"Plugin 'Valloric/YouCompleteMe'
-
-Plugin 'fatih/vim-go'
-
-Plugin 'tpope/vim-fugitive'
-
-Plugin 'tpope/vim-commentary'
-
-Plugin 'tpope/vim-surround'
-
-Plugin 'tpope/vim-obsession'
-
-Plugin 'scrooloose/syntastic'
-
-Plugin 'Raimondi/delimitMate'
-
-Plugin 'mxw/vim-jsx'
-
-Plugin 'christoomey/vim-tmux-navigator'
-
-Plugin 'wesQ3/vim-windowswap'
-
-call vundle#end()
 
 filetype plugin indent on
 syntax on
 
-colorscheme monokai
+"colorscheme monokai
 
 " split L-to-R and U-to-D
 set splitbelow
@@ -84,20 +51,12 @@ map <Leader>y "+y
 map <Leader>Y "+Y
 map <Leader>p "+p
 map <Leader>P "+P
+map <Leader><insert> :set invpaste
 
 vnoremap <Leader>d "+d
 nnoremap <Leader><CR> :let @/ = ""<CR>
 
 """"""""""""
-
-""" NVIM """
-
-if has('nvim')
-  tnoremap <Esc> <C-\><C-n>
-  "tnoremap <C-n> <C-\><C-n>:tabe<CR>:term<CR>
-endif
-
-""""""""""""""""""""""""""""""
 
 """ Basic Mapping Smoothing """
 
@@ -112,9 +71,6 @@ nnoremap K i<CR><Esc>k:s/\s\+$//e<CR>$
 
 """ Movement """
 
-" move top or bottom line to center
-nnoremap gk Hzz
-nnoremap gj Lzz
 " make '' horizontally centered
 noremap '' ''zz
 
@@ -122,6 +78,10 @@ noremap '' ''zz
 let g:syntastic_always_populate_loc_list = 1
 
 """""""""""""""""""""""
+
+""" Pane Creation """
+nnoremap <C-w>\ :vsp<CR>
+nnoremap <C-w><C-\> <C-w>\
 
 """ Pane Navigation """
 let g:tmux_navigator_no_mappings = 1
@@ -207,13 +167,6 @@ nnoremap ca/ F/cf/
 nnoremap ci, T,ct,
 nnoremap ca, F,cf,
 
-noremap f f
-noremap F t
-noremap s F
-noremap S T
-noremap t <Nop>
-noremap T <Nop>
-
 """"""""""""""""""
 
 """ experiments """
@@ -223,15 +176,46 @@ imap <C-a> <Home>
 imap <C-e> <End>
 imap <C-b> <Left>
 imap <C-f> <Right>
+imap <C-h> <Backspace>
+imap <C-d> <Del>
 imap <C-p> <Up>
 imap <C-n> <Down>
-imap <C-S-b> <C-o>B
-imap <C-S-f> <C-o>E
-imap <C-d> <C-o>dl
-nmap <C-d> dl
-imap <C-h> <C-o>dh
-nmap <C-h> dh
-imap <C-S-d> <C-b><C-o>D
-imap <C-S-h> <C-o>d0<C-h>
 
 """""""""""""""""""
+
+noremap <silent> <Leader>:call ToggleWrap()<CR>
+function ToggleWrap()
+  if &wrap
+    setlocal nowrap
+    set virtualedit=all
+    silent! nunmap <buffer> <Up>
+    silent! nunmap <buffer> <Down>
+    silent! nunmap <buffer> <Home>
+    silent! nunmap <buffer> <End>
+    silent! nunmap <buffer> k
+    silent! nunmap <buffer> j
+    silent! nunmap <buffer> 0
+    silent! nunmap <buffer> $
+    silent! iunmap <buffer> <Up>
+    silent! iunmap <buffer> <Down>
+    silent! iunmap <buffer> <Home>
+    silent! iunmap <buffer> <End>
+  else
+    setlocal wrap linebreak nolist
+    set virtualedit=
+    setlocal display+=lastline
+    noremap  <buffer> <silent> <Up>   gk
+    noremap  <buffer> <silent> <Down> gj
+    noremap  <buffer> <silent> <Home> g<Home>
+    noremap  <buffer> <silent> <End>  g<End>
+    map  <buffer> <silent> k gk
+    map  <buffer> <silent> j gj
+    map  <buffer> <silent> 0 g0
+    map  <buffer> <silent> $ g$
+    inoremap <buffer> <silent> <Up>   <C-o>gk
+    inoremap <buffer> <silent> <Down> <C-o>gj
+    inoremap <buffer> <silent> <Home> <C-o>g<Home>
+    inoremap <buffer> <silent> <End>  <C-o>g<End>
+  endif
+endfunction
+call ToggleWrap()
