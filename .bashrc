@@ -1,64 +1,80 @@
-# Needs further modularization
+color_prompt=1
+
 SOURCE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 if [ -f $SOURCE_DIR/.local_bashrc ]; then
-    . $SOURCE_DIR/.local_bashrc
+	. $SOURCE_DIR/.local_bashrc
 fi
 
-# It's a prompt!
+if [ -f ~/.bash_aliases ]; then
+	. ~/.bash_aliases
+fi
+
+# Bit messy prompt code
 
 if [ "$color_prompt" ]; then
-    alias ls='ls --color=auto'
+	alias ls='ls --color=auto'
 
-    usr_c="\033[1;32m"
-    dir_c="\033[1;34m"
-    git_c="\033[1;30m"
-    no_c="\033[00m"
+	usr_c="38;5;171"
+	dir_c="38;5;37"
+	git_c="1;30"
+	no_c="00"
 fi
 
 unset color_prompt
 
-function git_root () {
-    git rev-parse --show-toplevel 2>/dev/null
+function print_git_root () {
+	if git_dir="$(git rev-parse --git-dir 2>/dev/null)"; then
+		dirname "$(realpath "$git_dir")"
+	else
+		return 1
+	fi
 }
-function git_branch () {
-    git symbolic-ref --short HEAD 2>/dev/null
+function print_git_branch () {
+	git symbolic-ref --short HEAD 2>/dev/null
 }
-function show_user_host () {
-    hostname=$(hostname | sed -r "s/\.local$//")
-    user_host="$(whoami)@$hostname"
-    if [[ $user_host == "george@georgematter.me" ]]; then
-        user_host="george.m@tter.vi"
-    fi
-    echo -n "$user_host"
+function wrap () {
+	# only iterperet the first arg as color code if it looks the part
+	if grep -qE '([0-9]{1,3};)*[0-9]{1,3}' <<< $1; then
+		echo -e "\e[$1m${@:2}\e[00m"
+	else
+		echo -n "$@"
+	fi
 }
-function show_location () {
-    if [ -z "$(git branch 2> /dev/null)" ]; then
-        echo -n "$(show_user_host)"
-    else
-        echo -n "$(basename $(git_root))"
-    fi
+function print_user_host () {
+	user="$(whoami)"
+	hostname="$(hostname | sed 's/\.local$//')"
+	if [[ "$user" == "george" && "$hostname" == "georgematter.me" ]]; then
+		wrap $usr_c 'george.m@tter.vi'
+	else
+		echo -n "$(wrap $usr_c $user)@$(wrap $usr_c $hostname)"
+	fi
 }
-function show_branch () {
-    if [ -n "$(git branch 2> /dev/null)" ]; then
-        echo -n ":$(git_branch)"
-    fi
+function print_location () {
+	# if we're in a git dir, print git root's basename instead of user@host
+	if git_root="$(print_git_root)"; then
+		git_root="$(basename $git_root)"
+		echo -n "$(wrap $usr_c $git_root):$(wrap $git_c $(print_git_branch))"
+	else
+		# print user@host unless it's overridden by .bash_local
+		if [ ! -z "$user_host"]; then
+			wrap $usr_c $user_host
+		else
+			user="$(whoami)"
+			hostname="$(hostname | sed 's/\.local$//')"
+			echo -n "$(wrap $usr_c $user)@$(wrap $usr_c $hostname)"
+		fi
+	fi
 }
-function show_rel_dir () {
-    if [ -z "$(git branch 2> /dev/null)" ]; then
-        echo -n $(pwd -L | sed -r "s|$HOME|~|")
-    else
-        echo -n $(git rev-parse --show-prefix | sed -r "s|^$|.|" | sed -r "s|/$||")
-    fi
+function print_rel_dir () {
+	# using `|` instead of `/` for these regexes because paths
+	if rel_path="$(git rev-parse --show-prefix 2>/dev/null)"; then
+		wrap $dir_c $(sed 's|^$|.|; s|/$||' <<< $relpath)
+	else
+		wrap $dir_c $(pwd -L | sed "s|$HOME|~|")
+	fi
 }
 
-PS1='['
-PS1=$PS1'\['$usr_c'\]$(show_location)\['$no_c'\]'
-PS1=$PS1'\['$git_c'\]$(show_branch)\['$no_c'\] '
-PS1=$PS1'\['$dir_c'\]$(show_rel_dir)\['$no_c'\]]$ '
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+export PS1='[$(print_location) $(print_rel_dir)]$ '
 
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
