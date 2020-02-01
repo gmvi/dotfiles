@@ -4,13 +4,15 @@ color_prompt=1
 
 [ -f ~/.bash_aliases ] && source ~/.bash_aliases
 
+[ -f ~/.dircolors ] && eval $(dircolors ~/.dircolors)
+
 # Bit messy prompt code
 
 if [ "$color_prompt" ]; then
 	alias ls='ls --color=auto'
 
 	usr_c="38;5;171"
-	dir_c="38;5;37"
+	dir_c="38;5;111"
 	git_c="38;5;102"
 	no_c="00"
 fi
