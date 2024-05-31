@@ -1,10 +1,8 @@
 [user]
   name = George Matter
   email = george.matter.vi@gmail.com
-[push]
-  default = current
 [core]
   editor = vim
   filemode = false
-[alias]
-  conflicts = "!eval $(git config --get core.editor) $(git rev-parse --show-toplevel)/{$(git diff --name-only | uniq | tr '\n' ',' | sed 's/,$//')}"
+#[alias]
+#  conflicts = "!eval $(git config --get core.editor) $(git rev-parse --show-toplevel)/{$(git diff --name-only | uniq | tr '\n' ',' | sed 's/,$//')}"
