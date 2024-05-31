@@ -1,0 +1,12 @@
+[shlvl]
+disabled = true
+threshold = 1
+symbol = "↕️"
+
+[os]
+disabled=false
+format = "$symbol "
+symbols.Ubuntu = ""
+
+[lua]
+detect_folders = []
